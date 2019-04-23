@@ -12,9 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ApplicationInsights.AspNetCore;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.AspNetCore.Hosting.Internal;
+using Bawn.EventFlowClient;
 
-namespace Bawn.EventFlowClient
+namespace ReportWebApp
 {
     public class Program
     {
@@ -28,8 +28,8 @@ namespace Bawn.EventFlowClient
 
         public static IWebHost BuildWebHost(string[] args, DiagnosticPipeline eventFlow) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => services.AddSingleton<ITelemetryProcessorFactory>(sp => new EventFlowTelemetryProcessorFactory(eventFlow)))
-                .UseStartup<Startup>()
+            .ConfigureServices(services => services.AddSingleton<ITelemetryProcessorFactory>(sp => new EventFlowTelemetryProcessorFactory(eventFlow)))
+            .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
 
